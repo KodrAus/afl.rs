@@ -18,6 +18,9 @@ fn main() {
 fn build_afl(out_dir: &Path) {
     let status = Command::new("make")
         .current_dir(AFL_SRC_PATH)
+        // Ignore errors building AFL
+        // This is due to a bug in the AFL 2.52b Makefile
+        .arg("-i")
         .args(&["clean", "all", "install"])
         // Rely on LLVM’s built-in execution tracing feature instead of AFL’s
         // LLVM passi instrumentation.
